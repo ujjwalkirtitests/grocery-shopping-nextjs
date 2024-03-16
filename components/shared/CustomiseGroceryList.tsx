@@ -3,7 +3,7 @@ import React from "react";
 
 function CustomiseGroceryList() {
   return (
-    <div className=" bg-gradient-to-r from-emerald-600 via-emerald-800 to-emerald-500 text-white p-3 rounded-[30px] h-[120px] my-6 w-11/12 mx-auto">
+    <div className=" bg-gradient-to-r from-emerald-600 via-emerald-800 to-emerald-500 text-white p-3 rounded-[30px] h-[120px] my-6 w-11/12 lg:w-[500px] mx-auto">
       <div className="flex items-center justify-between h-full ">
         <p className="font-bold text-2xl ml-4">
           Customise your
@@ -14,6 +14,7 @@ function CustomiseGroceryList() {
           <p>Add List</p>
         </div>
       </div>
+
     </div>
   );
 }

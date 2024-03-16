@@ -10,7 +10,7 @@ import BasketDrawer from "./BasketDrawer";
 function ItemsBucket() {
   const { items } = useCounterStore((state) => state);
   return (
-    <div className="fixed bottom-4 right-2 z-20 bg-emerald-500 text-white p-2 h-16 w-16 rounded-full cursor-pointer">
+    <div className="fixed bottom-4 right-2 z-20 bg-emerald-500 text-white p-2 h-16 w-16 rounded-full cursor-pointer flex lg:hidden">
       <Drawer>
         <DrawerTrigger className="h-full w-full flex items-center justify-center">
           <ShoppingBasketIcon className="h-10 w-10" />

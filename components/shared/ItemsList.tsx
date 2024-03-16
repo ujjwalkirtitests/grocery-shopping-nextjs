@@ -5,7 +5,7 @@ function ItemsList() {
   return (
     <div>
       <p className="font-bold text-xl mb-2">Items</p>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {groceryProducts.map((product) => (
           <ItemCard product={product} key={product.id} />
         ))}

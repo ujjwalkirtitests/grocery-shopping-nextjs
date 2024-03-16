@@ -28,7 +28,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <CounterStoreProvider>
             <Navbar />
-            <div className="grow">{children}</div>
+            <div className="grow w-full lg:w-4/5 lg:mx-auto">{children}</div>
             <Footer />
           </CounterStoreProvider>
         </NextAuthProvider>
