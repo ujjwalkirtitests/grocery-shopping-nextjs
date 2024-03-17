@@ -3,15 +3,16 @@ import { MinusIcon, PlusIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useCounterStore } from "./Item-store-provider";
+import { IProduct } from "@/types";
 type ItemCardProps = {
-  product: Product;
+  product: IProduct;
 };
 function ItemCard({ product }: ItemCardProps) {
   const { items, addToCart, removeFromCart, totalItemsInCartBasedOnId } =
     useCounterStore((state) => state);
 
   const [count, setCount] = useState<number>(
-    totalItemsInCartBasedOnId(product.id)
+    totalItemsInCartBasedOnId(product._id || "")
   );
 
   return (
@@ -20,7 +21,7 @@ function ItemCard({ product }: ItemCardProps) {
         <Image
           height={200}
           width={200}
-          src={`/images/${product.thumbnail}`}
+          src={product.thumbnail}
           alt={product.title}
           className="w-full h-52 rounded-lg mr-4 object-cover"
         />
@@ -36,7 +37,7 @@ function ItemCard({ product }: ItemCardProps) {
           {count > 0 && (
             <MinusIcon
               onClick={() => {
-                removeFromCart(product.id);
+                removeFromCart(product._id || "");
                 setCount(count - 1);
                 console.log(items);
               }}
@@ -51,7 +52,7 @@ function ItemCard({ product }: ItemCardProps) {
           <div className="flex items-center gap-2">
             <StarIcon className="text-yellow-400 " />
             <p className="font-bold">
-              {parseFloat(product.rating.toString()+".0")}
+              {parseFloat(product.rating.toString() + ".0")}
             </p>
           </div>
         </div>

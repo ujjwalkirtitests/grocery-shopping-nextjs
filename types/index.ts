@@ -1,26 +1,29 @@
-interface Product {
+export interface IProduct {
     title: string,
     price: number,
     discountedPrice?: number,
     thumbnail: string,
-    _id: string,
+    _id?: string,
     stock: number,
     description: string,
     code: string,
-    category: Category,
+    category: ICategory,
     status: boolean,
     rating: number
     createdAt?: Date,
     updatedAt?: Date,
 }
 
+export enum UserRole {
+    CUSTOMER = 'customer',
+    SELLER = 'seller',
+}
 
-interface User {
+export interface UserData {
     username: string,
-    password: string,
     email: string,
-    _id: string,
-    role: string,
+    _id?: string,
+    role: UserRole,
     profile_pic: string
     address?: string,
     phone?: string,
@@ -29,33 +32,35 @@ interface User {
 }
 
 
-interface Order {
-    _id: string,
+export interface IOrder {
+    _id?: string,
     createdAt?: Date,
     updatedAt?: Date,
-    products: Product[],
-    user: User,
+    products: IProduct[],
+    user: UserData,
     status: string
 }
 
 
-interface Payment {
-    _id: string,
+export interface IPayment {
+    _id?: string,
     createdAt?: Date,
     updatedAt?: Date,
     amount: number,
-    user: User,
+    user: UserData,
     status: string,
-    order: Order,
+    order: IOrder,
     payment_method: string,
     currency: string,
 }
 
 
-interface Category {
-    _id: string,
+export interface ICategory {
+    _id?: string,
     createdAt?: Date,
     updatedAt?: Date,
     name: string,
     description: string,
+    thumbnail?: string
 }
+

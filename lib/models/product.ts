@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import { CategorySchema } from "./category";
+import { IProduct } from "@/types";
 
-const ProductSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema<IProduct>({
     title: { type: String, required: true },
     price: { type: Number, required: true },
     discountedPrice: { type: Number },
     thumbnail: { type: String, required: true },
-    timestamp: { type: Number, required: true },
     stock: { type: Number, required: true },
     description: { type: String, required: true },
     code: { type: String, required: true },
@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
     rating: { type: Number, required: true, min: 0, max: 5 },
 }, { timestamps: true });
 
-const Product = mongoose.model('Product', ProductSchema);
+const Product = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);
 
 
 export { Product, ProductSchema }

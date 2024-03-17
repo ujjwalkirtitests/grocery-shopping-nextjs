@@ -25,11 +25,11 @@ export const createCounterStore = (
         ...initState,
         addToCart: (product: Product) => set((state) => ({ items: [...state.items, product] })),
         removeFromCart: (productId) => set((state) => {
-            const i = state.items.findIndex((product: Product) => product.id === productId);
+            const i = state.items.findIndex((product: Product) => product._id === productId);
             return { items: state.items.filter((product: Product, index: number) => index != i) }
         }),
         totalItemsInCart: () => initState.items.length,
-        totalItemsInCartBasedOnId: (productId) => initState.items.filter((product: Product) => product.id === productId).length,
+        totalItemsInCartBasedOnId: (productId) => initState.items.filter((product: Product) => product._id === productId).length,
         clearCart: () => set({ items: [] }),
     }))
 

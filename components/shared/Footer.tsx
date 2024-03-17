@@ -26,38 +26,36 @@ function Footer() {
 
         <div className="flex flex-col items-start gap-2">
           <p className="text-xl font-bold">About Company</p>
-          <div className="flex items-start w-full gap-6">
+          <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-6">
             <Link
               className="flex items-center gap-2 font-semibold"
               href={"/about-us"}
             >
               About Us <LinkIcon />
             </Link>
-            <div className="flex items-start  gap-6">
-              <div className="">
-                {" "}
-                <p className=" font-semibold">Contact Us</p>
-                <p className="flex items-center gap-2">
-                  <PhoneIcon /> +91-9876543210
-                </p>
-              </div>
-              <div>
-                <p className="flex items-center gap-2 font-semibold">
-                  <HomeIcon /> Address
-                </p>
-                <p>Address Line 1</p>
-                <p>Address Line 2</p>
-                <p>City, State, Country</p>
-                <p>Zip Code</p>
-              </div>
+            <div className="">
+              {" "}
+              <p className=" font-semibold">Contact Us</p>
               <p className="flex items-center gap-2">
-                <MailIcon /> instant_order@gmail.com
+                <PhoneIcon /> +91-9876543210
               </p>
             </div>
+            <div>
+              <p className="flex items-center gap-2 font-semibold">
+                <HomeIcon /> Address
+              </p>
+              <p>Address Line 1</p>
+              <p>Address Line 2</p>
+              <p>City, State, Country</p>
+              <p>Zip Code</p>
+            </div>
+            <p className="flex items-center gap-2">
+              <MailIcon /> instant_order@gmail.com
+            </p>
           </div>
         </div>
 
-        <div className="flex items-center w-full gap-4">
+        <div className="flex items-center justify-center w-full gap-4 mb-10 lg:mb-0 z-30">
           <Link href={"#"}>
             <FacebookIcon />
           </Link>
@@ -67,6 +65,7 @@ function Footer() {
           <Link href={"#"}>
             <TwitterIcon />
           </Link>
+          | <p>Made with ❤️, by Ujjwal.</p>
         </div>
       </div>
     </div>
