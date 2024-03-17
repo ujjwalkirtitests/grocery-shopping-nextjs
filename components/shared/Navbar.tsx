@@ -3,31 +3,40 @@
 import {
   AlignLeftIcon,
   BellIcon,
+  HourglassIcon,
   SearchIcon,
   ShoppingBasketIcon,
-  ShoppingCart,
-  ShoppingCartIcon,
 } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import SideNavbar from "./SideNavbar";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useCounterStore } from "./Item-store-provider";
 import Image from "next/image";
+import { Input } from "../ui/input";
+import { IProduct } from "@/types";
+import ItemCard from "./ItemCard";
 
 function Navbar() {
   const iconStyle =
     "h-[40px] w-[40px] p-2 bg-white rounded-full cursor-pointer hover:shadow-lg";
   const { data: session } = useSession();
 
+  const [showSearchBox, setShowSearchBox] = useState<boolean>(false);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[] | null>(
+    []
+  );
+
+  const [loading, setLoading] = useState<boolean>(false);
+
   const { items } = useCounterStore((state) => state);
   return (
-    <div className=" px-3 py-2 h-[70px]">
+    <div className=" px-3 py-2 h-auto">
       <div className="flex items-center justify-between w-full lg:w-4/5 lg:mx-auto">
         <div className="flex items-center gap-4">
-          <div className="flex md:hidden">
+          <div className="flex lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
                 <AlignLeftIcon className={iconStyle} />
@@ -45,7 +54,10 @@ function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <SearchIcon className={iconStyle} />
+          <SearchIcon
+            className={iconStyle}
+            onClick={() => setShowSearchBox(!showSearchBox)}
+          />
           <BellIcon className={iconStyle} />
           <div className="relative mr-4">
             <ShoppingBasketIcon className={iconStyle} />
@@ -89,6 +101,49 @@ function Navbar() {
           )}
         </div>
       </div>
+      {showSearchBox && (
+        <div className="w-full lg:w-3/5 lg:mx-auto py-2 px-4 mt-2">
+          <div className=" rounded-lg flex items-center gap-4 bg-white border transform-gpu duration-200 transition-opacity animate-in py-2 px-4">
+            <Input
+              type="text"
+              className="border-none active:outline-none outline-none"
+              placeholder="Search..."
+              onChange={async (e) => {
+                if (e.target.value.length > 2) {
+                  setLoading(true);
+                  const response = await fetch(
+                    `/api/products/${e.target.value}`
+                  );
+
+                  const products = await response.json();
+
+                  setFilteredProducts(products);
+                  setLoading(false);
+                }
+              }}
+            />
+            <SearchIcon />
+          </div>
+          {loading && (
+            <div className="w-full flex justify-center items-center mt-5">
+              <HourglassIcon />
+            </div>
+          )}
+          {!loading && filteredProducts?.length === 0 && (
+            <p className="font-semibold text-center w-full mt-4">
+              Sorry, but no product was found!
+            </p>
+          )}
+
+          {filteredProducts?.length !== 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-3 px-2">
+              {filteredProducts?.map((product) => (
+                <ItemCard product={product} key={product._id} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

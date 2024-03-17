@@ -26,7 +26,7 @@ function Footer() {
 
         <div className="flex flex-col items-start gap-2">
           <p className="text-xl font-bold">About Company</p>
-          <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-6">
+          <div className="flex flex-col md:flex-row items-start justify-between w-full gap-6">
             <Link
               className="flex items-center gap-2 font-semibold"
               href={"/about-us"}

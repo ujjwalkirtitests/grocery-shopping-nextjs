@@ -28,14 +28,6 @@ export default async function Home() {
 
   return (
     <main className="px-3">
-      {session?.user && (
-        <div className="hidden lg:flex lg:flex-col">
-          <p className="font-bold text-3xl">
-            Hello, {session?.user?.name?.split(" ")[0]} 👋
-          </p>
-          <p className="text-sm mb-5">Store Name</p>
-        </div>
-      )}
       <div className="flex items-center  lg:bg-white mb-2">
         <CustomiseGroceryList />
         <div className="w-1/3 hidden lg:flex">

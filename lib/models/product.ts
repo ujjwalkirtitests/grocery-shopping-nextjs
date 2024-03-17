@@ -15,6 +15,8 @@ const ProductSchema = new mongoose.Schema<IProduct>({
     rating: { type: Number, required: true, min: 0, max: 5 },
 }, { timestamps: true });
 
+ProductSchema.index({ title: 'text', description: 'text' });
+
 const Product = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);
 
 
