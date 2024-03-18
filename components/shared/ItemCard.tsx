@@ -16,7 +16,7 @@ function ItemCard({ product }: ItemCardProps) {
   );
 
   return (
-    <div className="flex flex-col items-center gap-3 mb-2 bg-white p-4 rounded-lg hover:transform-gpu hover:scale-x-110 hover:scale-y-105 duration-150">
+    <div className="flex flex-col items-center gap-3 mb-2 bg-white shadow-md p-4 rounded-lg hover:transform-gpu hover:scale-x-110 hover:scale-y-105 duration-150">
       <div className="relative w-full">
         <Image
           height={200}
@@ -25,21 +25,19 @@ function ItemCard({ product }: ItemCardProps) {
           alt={product.title}
           className="w-full h-52 rounded-lg mr-4 object-cover"
         />
-        <div className="absolute top-2 right-2 bg-white text-black rounded-lg px-2 h-[35px] flex items-center justify-center gap-4 cursor-pointer">
+        <div className="absolute top-2 right-2 bg-white text-black rounded-lg px-2 h-[35px] flex items-center justify-center gap-1 cursor-pointer">
           <PlusIcon
             onClick={() => {
               addToCart(product);
               setCount(count + 1);
-              console.log(items);
             }}
           />
-          {count > 0 && <p className="font-semibold">{count}</p>}
+          {count > 0 && <p className="font-semibold bg-emerald-600 p-2 text-white">{count}</p>}
           {count > 0 && (
             <MinusIcon
               onClick={() => {
                 removeFromCart(product._id || "");
                 setCount(count - 1);
-                console.log(items);
               }}
             />
           )}

@@ -3,8 +3,9 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 import { useCounterStore } from "./Item-store-provider";
+import { IProduct } from "@/types";
 interface IndividualBasketDrawerItemProps {
-  item: Product;
+  item: IProduct;
   quantity: number;
 }
 function IndividualBasketDrawerItem({
@@ -17,7 +18,7 @@ function IndividualBasketDrawerItem({
   return (
     <div className="border rounded-md m-2 p-2 flex items-start gap-3 h-40">
       <Image
-        src={`/images/${item.thumbnail}`}
+        src={item.thumbnail}
         alt={`${item.title}'s image`}
         width={100}
         height={80}
@@ -26,7 +27,9 @@ function IndividualBasketDrawerItem({
       <div className="flex flex-col h-full justify-between gap-2 p-3 flex-1">
         <div>
           <p className="text-xl">{item.title}</p>
-          <p className="text-sm text-gray-500 italic">under {item.category}</p>
+          <p className="text-sm text-gray-500 italic">
+            under {item.category.name}
+          </p>
         </div>
         <div className="flex items-center justify-between ">
           <div className="flex items-center gap-2 text-md">
@@ -40,7 +43,7 @@ function IndividualBasketDrawerItem({
             </Button>
             <p>{quantity}</p>
             <Button
-              onClick={() => removeFromCart(item.id)}
+              onClick={() => removeFromCart(item._id || "")}
               className={buttonStyle}
             >
               <MinusIcon />

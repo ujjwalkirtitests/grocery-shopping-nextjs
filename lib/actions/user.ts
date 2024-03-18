@@ -24,7 +24,6 @@ async function addUser(user: UserData): Promise<UserData | null> {
     const newUser = new User(user);
     try {
         const savedUser = await newUser.save();
-        console.log('User added:', savedUser);
         return savedUser;
     } catch (err) {
         console.error(err);

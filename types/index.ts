@@ -32,13 +32,22 @@ export interface UserData {
 }
 
 
+export enum OrderStatus {
+    PENDING = "pending",
+    COMPLETED = "completed",
+    CANCELLED = "cancelled",
+}
+
 export interface IOrder {
     _id?: string,
     createdAt?: Date,
     updatedAt?: Date,
     products: IProduct[],
     user: UserData,
-    status: string
+    status: OrderStatus,
+    amount: number,
+    currency: string,
+    receipt: string,
 }
 
 
@@ -48,10 +57,13 @@ export interface IPayment {
     updatedAt?: Date,
     amount: number,
     user: UserData,
-    status: string,
+    status?: string,
     order: IOrder,
     payment_method: string,
     currency: string,
+    payment_gateway_payment_id: string,
+    payment_gateway_order_id: string,
+    payment_gateway_signature: string,
 }
 
 

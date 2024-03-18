@@ -6,6 +6,7 @@ import Footer from "@/components/shared/Footer";
 import NextAuthProvider from "@/components/shared/NextAuthProvider";
 import { CounterStoreProvider } from "@/components/shared/Item-store-provider";
 
+
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700"],
   display: "swap",

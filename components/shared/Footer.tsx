@@ -15,9 +15,7 @@ function Footer() {
     <div className="p-3 border border-t bg-gray-200 mt-10">
       <div className="w-full lg:w-4/5 lg:mx-auto flex flex-col gap-7">
         <div className="flex flex-col">
-          <p className="text-3xl font-bold  mr-4 hidden lg:flex">
-            Instant-Order
-          </p>
+          <p className="text-3xl font-bold  mr-4 hidden lg:flex">Groceriess</p>
           <div className="text-sm flex items-center gap-2">
             <p>© {new Date().getFullYear()}</p>
             <p>All rights reserved.</p>

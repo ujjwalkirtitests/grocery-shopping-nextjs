@@ -5,6 +5,7 @@ import ItemsBucket from "@/components/shared/ItemsBucket";
 import ItemsList from "@/components/shared/ItemsList";
 import { getAllCategories } from "@/lib/actions/category";
 import { getTopProducts } from "@/lib/actions/product";
+import { getCurrentUser } from "@/lib/actions/user";
 import { seedCategory, seedProduct } from "@/lib/seed";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -26,6 +27,8 @@ export default async function Home() {
     products = await getTopProducts();
   }
 
+  const currentUser = await getCurrentUser(session?.user?.email as string);
+
   return (
     <main className="px-3">
       <div className="flex items-center  lg:bg-white mb-2">
@@ -42,7 +45,7 @@ export default async function Home() {
       </div>
       <CategoryList groceryCatergories={categories || []} />
       <ItemsList groceryProducts={products || []} />
-      <ItemsBucket />
+      <ItemsBucket currentUser={currentUser} />
       <BottomLinearGradient />
     </main>
   );

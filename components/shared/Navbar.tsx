@@ -102,7 +102,7 @@ function Navbar() {
         </div>
       </div>
       {showSearchBox && (
-        <div className="w-full lg:w-3/5 lg:mx-auto py-2 px-4 mt-2">
+        <div className="w-full lg:w-3/5 lg:mx-auto py-2 lg:px-4 mt-2">
           <div className=" rounded-lg flex items-center gap-4 bg-white border transform-gpu duration-200 transition-opacity animate-in py-2 px-4">
             <Input
               type="text"
@@ -136,7 +136,7 @@ function Navbar() {
           )}
 
           {filteredProducts?.length !== 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-3 px-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-3 px-2">
               {filteredProducts?.map((product) => (
                 <ItemCard product={product} key={product._id} />
               ))}
