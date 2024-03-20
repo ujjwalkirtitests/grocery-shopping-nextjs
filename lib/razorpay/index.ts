@@ -1,6 +1,4 @@
 import { IOrder, IPayment, IProduct, OrderStatus, UserData } from "@/types";
-import { createOrder } from "../actions/order";
-import { addPayment } from "../actions/payment";
 
 
 async function paymentHandler(amount: number, id: string, products: IProduct[], userDetails: UserData) {
@@ -40,7 +38,8 @@ async function paymentHandler(amount: number, id: string, products: IProduct[], 
                 body: JSON.stringify({ order: order, payment: payment })
             })
 
-            if(apiResponse.status === 200) {
+            if (apiResponse.status === 200) {
+                console.log(await apiResponse.json())
                 alert("Payment Successful");
             } else {
                 alert("Payment Failed");

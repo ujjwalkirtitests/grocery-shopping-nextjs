@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { IPayment } from "@/types";
 
-const PaymentSchema = new mongoose.Schema<IPayment>({
+const PaymentSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     status: { type: String, required: true },
@@ -13,7 +12,7 @@ const PaymentSchema = new mongoose.Schema<IPayment>({
     payment_gateway_signature: { type: String, required: true }
 }, { timestamps: true });
 
-const Payment = mongoose.models.Payment || mongoose.model<IPayment>('Payment', PaymentSchema);
+const Payment = mongoose.models.Payment || mongoose.model('Payment', PaymentSchema);
 
 
 export { PaymentSchema, Payment }

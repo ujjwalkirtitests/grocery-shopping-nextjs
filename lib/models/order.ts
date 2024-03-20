@@ -1,12 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { ProductSchema } from "./product";
 import { models } from "mongoose";
-import { IOrder, OrderStatus } from "@/types";
+import { OrderStatus } from "@/types";
 
 
 
-const OrderSchema = new mongoose.Schema<IOrder>({
-    products: { type: [ProductSchema], required: true },
+const OrderSchema = new mongoose.Schema({
+    products: { type: [Schema.Types.ObjectId], ref: "Product", required: true },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     status: { type: String, required: true, enum: Object.values(OrderStatus) },
     amount: { type: Number, required: true },
@@ -15,7 +14,7 @@ const OrderSchema = new mongoose.Schema<IOrder>({
 
 }, { timestamps: true });
 
-const Order = models.Order || mongoose.model<IOrder>('Order', OrderSchema);
+const Order = models.Order || mongoose.model('Order', OrderSchema);
 
 
 export { Order, OrderSchema }

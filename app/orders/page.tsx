@@ -1,4 +1,5 @@
 import { addUser, getCurrentUser } from "@/lib/actions/user";
+import { UserData, UserRole } from "@/types";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -8,10 +9,7 @@ async function OrdersPage() {
   if (!session || !session?.user) {
     redirect(process.env.DOMAIN + "/api/auth/signin");
   }
-  enum UserRole {
-    CUSTOMER = "customer",
-    SELLER = "seller",
-  }
+
   let currentUser = await getCurrentUser(session.user.email as string);
   if (!currentUser) {
     const userData: UserData = {

@@ -5,7 +5,13 @@ import { Payment } from "../models/payment";
 
 
 async function addPayment(payment: IPayment): Promise<IPayment | null> {
-    const newPayment = new Payment(payment)
+    const paymentObject = {
+        ...payment,
+        user: payment.user._id,
+        order: payment.order,
+
+    }
+    const newPayment = new Payment(paymentObject);
     try {
         await connectToDatabase();
         const savedProduct = await newPayment.save();

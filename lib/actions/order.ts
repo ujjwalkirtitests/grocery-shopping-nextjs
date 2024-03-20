@@ -1,12 +1,23 @@
 import { ObjectId } from "mongodb";
 import { Order } from "../models/order";
-import { IOrder } from "@/types";
+import { IOrder, OrderStatus } from "@/types";
 import { connectToDatabase } from "../mongodb";
 
 
 
 async function createOrder(order: IOrder): Promise<IOrder | null> {
-    const newOrder = new Order(order);
+
+    let productIds: string[] = []
+    order.products.forEach(product => productIds.push(product._id as string));
+    const orderObject = {
+        products: productIds,
+        user: order.user._id,
+        status: OrderStatus.PENDING,
+        amount: order.amount,
+        currency: order.currency,
+        receipt: order.receipt
+    }
+    const newOrder = new Order(orderObject);
     try {
         await connectToDatabase();
         const savedOrder = await newOrder.save();

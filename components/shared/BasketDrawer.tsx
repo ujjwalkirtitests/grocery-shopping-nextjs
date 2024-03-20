@@ -2,7 +2,7 @@ import { DrawerClose, DrawerContent } from "@/components/ui/drawer";
 import { useCounterStore } from "./Item-store-provider";
 import IndividualBasketDrawerItem from "./IndividualBasketDrawerItem";
 import { WalletIcon } from "lucide-react";
-import { IOrder, IProduct, UserData } from "@/types";
+import { IProduct, UserData } from "@/types";
 import { Button } from "../ui/button";
 import { paymentHandler } from "@/lib/razorpay";
 import Script from "next/script";

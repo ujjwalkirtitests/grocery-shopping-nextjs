@@ -3,22 +3,30 @@ import { addPayment } from "@/lib/actions/payment";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, response: NextResponse) {
-    const orderObject = await request.json();
-    const createdOrder = await createOrder(orderObject.order)
-    if (createdOrder) {
-        const createdPayment = await addPayment(orderObject.payment);
-        if (createdPayment) {
+
+    try {
+        const orderObject = await request.json();
+        const createdOrder = await createOrder(orderObject.order)
+        const createdPayment = await addPayment({ ...orderObject.payment, order: createdOrder?._id });
+        if (createdOrder && createdPayment) {
             return NextResponse.json({
-                message: "Payment created successfully!"
+                order: createdOrder,
+                payment: createdPayment
+            })
+        } else {
+            return NextResponse.json({
+                error: "Something went wrong"
             }, {
-                status: 200
+                status: 400
             })
         }
-    } else {
+    } catch (error) {
         return NextResponse.json({
-            message: "There was some error in creating the object!"
+            error
         }, {
             status: 400
         })
     }
+
+
 }
