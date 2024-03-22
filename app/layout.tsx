@@ -5,7 +5,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import NextAuthProvider from "@/components/shared/NextAuthProvider";
 import { CounterStoreProvider } from "@/components/shared/Item-store-provider";
-
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700"],
@@ -31,6 +31,7 @@ export default function RootLayout({
             <Navbar />
             <div className="grow w-full lg:w-4/5 lg:mx-auto">{children}</div>
             <Footer />
+            <Toaster />
           </CounterStoreProvider>
         </NextAuthProvider>
       </body>

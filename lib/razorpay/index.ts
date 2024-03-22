@@ -1,6 +1,38 @@
 import { IOrder, IPayment, IProduct, OrderStatus, UserData } from "@/types";
 
 
+async function clientSidePaymentHandler(currentUser: UserData, items: IProduct[], toast: any) {
+    const amount =
+        items.reduce(function (total, currentItem: IProduct) {
+            total += currentItem.price;
+            return total;
+        }, 0) * 100;
+    const order = {
+        amount: amount,
+        currency: "INR",
+        receipt: "receipt#1",
+    };
+    const response = await fetch("/api/payment/create-order", {
+        method: "POST",
+        body: JSON.stringify(order),
+    });
+    const createdOrder = await response.json();
+    if (createdOrder.error) {
+        toast({
+            title: "Something went wrong",
+            description: "Please try again",
+        });
+        return;
+    }
+    paymentHandler(amount, createdOrder.id, items, currentUser);
+}
+
+
+
+
+
+
+
 async function paymentHandler(amount: number, id: string, products: IProduct[], userDetails: UserData) {
     var options = {
         "key_id": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string, // Enter the Key ID generated from the Dashboard
@@ -68,4 +100,4 @@ async function paymentHandler(amount: number, id: string, products: IProduct[], 
 
 
 
-export { paymentHandler };
+export { paymentHandler, clientSidePaymentHandler };

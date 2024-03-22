@@ -16,7 +16,7 @@ function ItemCard({ product }: ItemCardProps) {
   );
 
   return (
-    <div className="flex flex-col items-center gap-3 mb-2 bg-white shadow-md p-4 rounded-lg hover:transform-gpu hover:scale-x-110 hover:scale-y-105 duration-150">
+    <div className="flex flex-col items-center gap-3 mb-2 bg-white shadow-md p-2 md:p-4 rounded-lg hover:transform-gpu hover:scale-x-100 md:hover:scale-x-110 hover:scale-y-105 duration-150">
       <div className="relative w-full">
         <Image
           height={200}
@@ -32,7 +32,11 @@ function ItemCard({ product }: ItemCardProps) {
               setCount(count + 1);
             }}
           />
-          {count > 0 && <p className="font-semibold bg-emerald-600 p-2 text-white">{count}</p>}
+          {count > 0 && (
+            <p className="font-semibold bg-emerald-600 p-2 text-white">
+              {count}
+            </p>
+          )}
           {count > 0 && (
             <MinusIcon
               onClick={() => {

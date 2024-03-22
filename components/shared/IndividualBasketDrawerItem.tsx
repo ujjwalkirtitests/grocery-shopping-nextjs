@@ -16,7 +16,7 @@ function IndividualBasketDrawerItem({
   const buttonStyle =
     "border border-emerald-600 bg-transparent text-emerald-600 hover:text-white p-1 h-8 hover:bg-emerald-600";
   return (
-    <div className="border rounded-md m-2 p-2 flex items-start gap-3 h-40">
+    <div className="border rounded-md m-2 p-2 flex items-start gap-3 h-40 shadow-md bg-white">
       <Image
         src={item.thumbnail}
         alt={`${item.title}'s image`}
@@ -31,7 +31,7 @@ function IndividualBasketDrawerItem({
             under {item.category.name}
           </p>
         </div>
-        <div className="flex items-center justify-between ">
+        <div className="flex flex-col items-start gap-3  sm:flex-row sm:items-center justify-between ">
           <div className="flex items-center gap-2 text-md">
             <Button
               onClick={() => {

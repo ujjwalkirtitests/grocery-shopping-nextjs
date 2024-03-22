@@ -3,9 +3,10 @@ import { useCounterStore } from "./Item-store-provider";
 import IndividualBasketDrawerItem from "./IndividualBasketDrawerItem";
 import { WalletIcon } from "lucide-react";
 import { IProduct, UserData } from "@/types";
-import { Button } from "../ui/button";
-import { paymentHandler } from "@/lib/razorpay";
 import Script from "next/script";
+import Link from "next/link";
+import CustomisedButton from "./CustomisedButton";
+import Image from "next/image";
 
 function groupItems(items: IProduct[]) {
   const response: { product: IProduct; quantity: number }[] = [];
@@ -27,49 +28,53 @@ function BasketDrawer({ currentUser }: BasketDrawerProps) {
 
   return (
     <DrawerContent className="">
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />;
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <div className="h-[70vh] overflow-y-scroll hide-scrollbar relative pb-20">
-        {groupItems(items).map(
-          (item: { product: IProduct; quantity: number }, index) => (
-            <IndividualBasketDrawerItem
-              item={item.product}
-              quantity={item.quantity}
-              key={item.product._id}
+        {items.length !== 0 ? (
+          <div>
+            {groupItems(items).map(
+              (item: { product: IProduct; quantity: number }, index) => (
+                <IndividualBasketDrawerItem
+                  item={item.product}
+                  quantity={item.quantity}
+                  key={item.product._id}
+                />
+              )
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center pt-5">
+            <Image
+              src={`/images/empty-cart.jpg`}
+              alt="Picture of empty shopping cart"
+              height={300}
+              width={300}
+              className="my-10"
             />
-          )
+            <p className="text-xl font-semibold">Sorry, the cart is empty!</p>
+          </div>
         )}
-        <Button
-          onClick={async (e) => {
-            if (currentUser) {
-              const amount =
-                items.reduce(function (total, currentItem: IProduct) {
-                  total += currentItem.price;
-                  return total;
-                }, 0) * 100;
-              const order = {
-                amount: amount,
-                currency: "INR",
-                receipt: "receipt#1",
-              };
-              const response = await fetch("/api/payment/create-order", {
-                method: "POST",
-                body: JSON.stringify(order),
-              });
-              const createdOrder = await response.json();
-              if (createdOrder.error) {
-                alert("something went wrong, please try again");
-                return;
-              }
-              paymentHandler(amount, createdOrder.id, items, currentUser);
-              e.preventDefault();
-            } else {
-              alert("Please login to continue");
-            }
-          }}
-          className="fixed bottom-6 w-3/5 mx-auto left-0 right-0 bg-gradient-to-r from-emerald-600 via-emerald-800 to-emerald-500 text-white flex items-center px-3 py-4 rounded-full justify-center gap-4 text-xl font-semibold cursor-pointer hover:shadow-lg hover:shadow-emerald-700 transform-gpu duration-300"
-        >
-          Proceed to Payment <WalletIcon />
-        </Button>
+
+        {items.length !== 0 && (
+          <CustomisedButton
+            // onClick={async (e) => {
+            //   if (currentUser) {
+            //     await clientSidePaymentHandler(currentUser, items, toast);
+            //     e.preventDefault();
+            //   } else {
+            //     toast({
+            //       title: "Please login to continue",
+            //     });
+            //   }
+            // }}
+            asChild={true}
+            className="fixed bottom-6 w-11/12 sm:w-3/5 mx-auto left-0 right-0 flex items-center px-3 py-6 rounded-full justify-center gap-4 text-xl font-semibold"
+          >
+            <Link href={"/payments"}>
+              Proceed to Payment <WalletIcon />
+            </Link>
+          </CustomisedButton>
+        )}
       </div>
     </DrawerContent>
   );

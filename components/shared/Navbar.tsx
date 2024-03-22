@@ -18,6 +18,7 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { IProduct } from "@/types";
 import ItemCard from "./ItemCard";
+import CustomisedButton from "./CustomisedButton";
 
 function Navbar() {
   const iconStyle =
@@ -48,17 +49,19 @@ function Navbar() {
             Instant-Order
           </p>
 
-          <div className="flex flex-col lg:hidden">
-            <p className="font-bold">Hello, {session?.user?.name}</p>
-            <p className="text-sm">Store Name</p>
-          </div>
+          {session?.user && (
+            <div className="flex flex-col lg:hidden">
+              <p className="font-bold">Hello, {session?.user?.name}</p>
+              <p className="text-sm">Store Name</p>
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-3">
           <SearchIcon
             className={iconStyle}
             onClick={() => setShowSearchBox(!showSearchBox)}
           />
-          <BellIcon className={iconStyle} />
+          {session?.user && <BellIcon className={iconStyle} />}
           <div className="relative mr-4">
             <ShoppingBasketIcon className={iconStyle} />
             <p className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full h-7 w-7 p-1 flex items-center justify-center text-sm font-semibold">
@@ -91,13 +94,13 @@ function Navbar() {
               </Button>
             </div>
           ) : (
-            <Button
+            <CustomisedButton
               onClick={() => {
                 signIn("google");
               }}
             >
               Log-in
-            </Button>
+            </CustomisedButton>
           )}
         </div>
       </div>

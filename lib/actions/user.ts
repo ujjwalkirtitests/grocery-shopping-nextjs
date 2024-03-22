@@ -38,10 +38,11 @@ async function updateUser(email: string, updates: Partial<UserData>): Promise<Us
         const user = await User.findOneAndUpdate({ email: email } as FilterQuery<UserData>, updates, { new: true }).exec();
         if (user) {
             console.log('User updated:', user);
+            return user;
         } else {
             console.log('No user found with email:', email);
+            return null
         }
-        return user;
     } catch (err) {
         console.error(err);
         return null;

@@ -1,11 +1,12 @@
+import { IProduct } from '@/types'
 import { createStore } from 'zustand/vanilla'
 
 export type CounterState = {
-    items: Product[]
+    items: IProduct[]
 }
 
 export type CounterActions = {
-    addToCart: (product: Product) => void
+    addToCart: (product: IProduct) => void
     removeFromCart: (productId: string) => void
     totalItemsInCart: () => number
     totalItemsInCartBasedOnId: (productId: string) => number
@@ -23,13 +24,13 @@ export const createCounterStore = (
 ) => {
     return createStore<CounterStore>()((set) => ({
         ...initState,
-        addToCart: (product: Product) => set((state) => ({ items: [...state.items, product] })),
+        addToCart: (product: IProduct) => set((state) => ({ items: [...state.items, product] })),
         removeFromCart: (productId) => set((state) => {
-            const i = state.items.findIndex((product: Product) => product._id === productId);
-            return { items: state.items.filter((product: Product, index: number) => index != i) }
+            const i = state.items.findIndex((product: IProduct) => product._id === productId);
+            return { items: state.items.filter((product: IProduct, index: number) => index != i) }
         }),
         totalItemsInCart: () => initState.items.length,
-        totalItemsInCartBasedOnId: (productId) => initState.items.filter((product: Product) => product._id === productId).length,
+        totalItemsInCartBasedOnId: (productId) => initState.items.filter((product: IProduct) => product._id === productId).length,
         clearCart: () => set({ items: [] }),
     }))
 

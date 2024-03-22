@@ -1,11 +1,11 @@
-import { UserData, UserRole } from "@/types";
-import mongoose, { models } from "mongoose";
+import { UserRole } from "@/types";
+import mongoose from "mongoose";
 
 
 
 
 
-const UserSchema = new mongoose.Schema<UserData>({
+const UserSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     role: { type: String, required: true, enum: Object.values(UserRole) },
@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema<UserData>({
     phone: { type: String },
 }, { timestamps: true });
 
-const User = models.User || mongoose.model<UserData>('User', UserSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 
 export { UserSchema, User }
