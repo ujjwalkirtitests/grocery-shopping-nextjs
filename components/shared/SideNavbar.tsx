@@ -2,7 +2,6 @@ import { SheetClose, SheetContent } from "@/components/ui/sheet";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import CustomisedButton from "./CustomisedButton";
 function SideNavbar() {
   const { data: session } = useSession();

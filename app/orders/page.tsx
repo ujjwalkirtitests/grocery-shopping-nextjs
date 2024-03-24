@@ -10,6 +10,7 @@ import { getOrdersForUser } from "@/lib/actions/order";
 import { addUser, getCurrentUser } from "@/lib/actions/user";
 import { IOrder, UserData, UserRole } from "@/types";
 import { getServerSession } from "next-auth";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -36,7 +37,7 @@ async function OrdersPage() {
   }
   return (
     <div className="px-3 mt-5">
-      <p>All Orders</p>
+      <p className="font-bold text-xl">All Orders</p>
       <Table>
         <TableHeader>
           <TableRow>
@@ -59,6 +60,19 @@ async function OrdersPage() {
           ))}
         </TableBody>
       </Table>
+      <div>
+        {allOrders?.length === 0 && (
+          <div className="flex flex-col items-center my-10">
+            <p>Sorry you have not placed any <span className="text-emerald-800 font-semibold">order</span> yet!</p>
+            <Image
+              src={`/images/404.svg`}
+              alt="Nothing found in past orders svg"
+              height={200}
+              width={200}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -11,7 +11,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import SideNavbar from "./SideNavbar";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { useCounterStore } from "./Item-store-provider";
 import Image from "next/image";
