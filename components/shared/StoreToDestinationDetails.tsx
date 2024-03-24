@@ -21,7 +21,7 @@ function StoreToDestinationDetails({
 
   const { toast } = useToast();
   return (
-    <div>
+    <div className=" my-5">
       <div className="flex items-center gap-3">
         <MapPinIcon />
         <p>Store Address</p>

@@ -24,6 +24,9 @@ function SideNavbar() {
             </p>
             <p className="text-sm text-gray-600">{session.user.email}</p>
           </div>
+          <Link className={linkStyle} href={"/"}>
+            Home
+          </Link>
           <Link className={linkStyle} href={"/orders"}>
             Past Orders
           </Link>

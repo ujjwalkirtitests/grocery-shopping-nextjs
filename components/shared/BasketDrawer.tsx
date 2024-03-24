@@ -57,16 +57,6 @@ function BasketDrawer({ currentUser }: BasketDrawerProps) {
 
         {items.length !== 0 && (
           <CustomisedButton
-            // onClick={async (e) => {
-            //   if (currentUser) {
-            //     await clientSidePaymentHandler(currentUser, items, toast);
-            //     e.preventDefault();
-            //   } else {
-            //     toast({
-            //       title: "Please login to continue",
-            //     });
-            //   }
-            // }}
             asChild={true}
             className="fixed bottom-6 w-11/12 sm:w-3/5 mx-auto left-0 right-0 flex items-center px-3 py-6 rounded-full justify-center gap-4 text-xl font-semibold"
           >

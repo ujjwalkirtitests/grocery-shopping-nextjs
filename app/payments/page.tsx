@@ -31,7 +31,7 @@ async function PaymentsPage() {
       <PaymentBill />
       {/* items total, GST, Delivery Charges and Bill Total*/}
 
-      <BillDetails />
+      <BillDetails currentUser={currentUser} />
     </div>
   );
 }

@@ -1,8 +1,17 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { getOrdersForUser } from "@/lib/actions/order";
 import { addUser, getCurrentUser } from "@/lib/actions/user";
-import { UserData, UserRole } from "@/types";
+import { IOrder, UserData, UserRole } from "@/types";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
 
 async function OrdersPage() {
   const session = await getServerSession();
@@ -20,7 +29,38 @@ async function OrdersPage() {
     };
     currentUser = await addUser(userData);
   }
-  return <div>OrdersPage</div>;
+
+  let allOrders: IOrder[] | null = [];
+  if (currentUser) {
+    allOrders = await getOrdersForUser(currentUser._id as string);
+  }
+  return (
+    <div className="px-3 mt-5">
+      <p>All Orders</p>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Id</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Created At</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {allOrders?.map((order, index) => (
+            <TableRow key={order._id}>
+              <TableCell>
+                <Link className="hover:underline" href={`orders/${order._id}`}>
+                  Order #{index}
+                </Link>
+              </TableCell>
+              <TableCell>{order.status.toLocaleUpperCase()}</TableCell>
+              <TableCell>dsdas</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
 }
 
 export default OrdersPage;

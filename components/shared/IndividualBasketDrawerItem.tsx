@@ -16,7 +16,7 @@ function IndividualBasketDrawerItem({
   const buttonStyle =
     "border border-emerald-600 bg-transparent text-emerald-600 hover:text-white p-1 h-8 hover:bg-emerald-600";
   return (
-    <div className="border rounded-md m-2 p-2 flex items-start gap-3 h-40 shadow-md bg-white">
+    <div className="border rounded-md m-2 p-2 flex items-start gap-3  shadow-md bg-white">
       <Image
         src={item.thumbnail}
         alt={`${item.title}'s image`}
@@ -51,7 +51,7 @@ function IndividualBasketDrawerItem({
           </div>
           <div className="font-bold">
             {" "}
-            Total: Rs {Math.round(item.price * quantity)}
+            Total: Rs {Number((item.price * quantity).toFixed(2))}
           </div>
         </div>
       </div>

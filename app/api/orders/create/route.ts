@@ -11,8 +11,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
         if (createdOrder && createdPayment) {
             return NextResponse.json({
                 order: createdOrder,
-                payment: createdPayment
-            })
+            },
+                {
+                    status: 201,
+                })
         } else {
             return NextResponse.json({
                 error: "Something went wrong"
@@ -24,7 +26,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         return NextResponse.json({
             error
         }, {
-            status: 400
+            status: 500
         })
     }
 

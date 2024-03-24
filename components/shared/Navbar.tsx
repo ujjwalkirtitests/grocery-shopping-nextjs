@@ -45,9 +45,11 @@ function Navbar() {
               <SideNavbar />
             </Sheet>
           </div>
-          <p className="text-2xl font-bold  mr-4 hidden lg:flex">
-            Instant-Order
-          </p>
+          <Link href={`/`}>
+            <p className="text-2xl font-bold  mr-4 hidden lg:flex">
+              Groceriess
+            </p>
+          </Link>
 
           {session?.user && (
             <div className="flex flex-col lg:hidden">
@@ -85,13 +87,13 @@ function Navbar() {
                   className="rounded-full"
                 />
               </Link>
-              <Button
+              <CustomisedButton
                 onClick={() => {
                   signOut();
                 }}
               >
                 Sign-out!
-              </Button>
+              </CustomisedButton>
             </div>
           ) : (
             <CustomisedButton

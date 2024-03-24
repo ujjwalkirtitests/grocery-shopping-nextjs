@@ -36,7 +36,7 @@ async function getOrdersForUser(userId: string): Promise<IOrder[] | null> {
 
     try {
         await connectToDatabase();
-        const orders = await Order.find({ userId: currentUserId });
+        const orders = await Order.find({ user: currentUserId });
 
 
         return JSON.parse(JSON.stringify(orders));
@@ -48,7 +48,23 @@ async function getOrdersForUser(userId: string): Promise<IOrder[] | null> {
 }
 
 
+async function getOrderDetails(orderId: string): Promise<IOrder | null> {
+    if (!orderId) throw new Error("OrderId is required");
+    try {
+        const currentOrderId = new ObjectId(orderId);
+        await connectToDatabase();
+        const order = await Order.findById(currentOrderId).populate('products').populate('user');
+        if (order) {
+            return JSON.parse(JSON.stringify(order));
+
+        } else {
+            return null
+        }
+    } catch (error) {
+        console.error(error);
+        return null
+    }
+}
 
 
-
-export { createOrder, getOrdersForUser }
+export { createOrder, getOrdersForUser, getOrderDetails }
