@@ -35,7 +35,7 @@ export default async function Home() {
         <CustomiseGroceryList />
         <div className="w-1/3 hidden lg:flex">
           <Image
-            src={"/images/shopping_Cart.jpg"}
+            src={"/images/shopping_cart.jpg"}
             alt="Shopping cart jpeg"
             width={200}
             height={200}
