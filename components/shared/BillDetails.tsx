@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import Script from "next/script";
 
 function totalCost(items: IProduct[]) {
-  return Number(items.reduce((acc, item) => acc + item.price, 0).toFixed(2));
+  return items.reduce((acc, item) => acc + item.price, 0).toFixed(2);
 }
 
 interface BillDetailsProps {

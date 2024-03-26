@@ -21,7 +21,7 @@ async function PaymentsPage() {
     });
   }
   return (
-    <div className="h-full px-3">
+    <div className="h-full px-3 w-full lg:w-3/5 mx-auto">
       {/* store to destination details*/}
       <StoreToDestinationDetails currentUser={currentUser} />
 
