@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useCounterStore } from "./Item-store-provider";
 import { IProduct } from "@/types";
+import { useToast } from "../ui/use-toast";
 interface IndividualBasketDrawerItemProps {
   item: IProduct;
   quantity: number;
@@ -13,6 +14,8 @@ function IndividualBasketDrawerItem({
   quantity,
 }: IndividualBasketDrawerItemProps) {
   const { addToCart, removeFromCart } = useCounterStore((state) => state);
+
+  const { toast } = useToast();
   const buttonStyle =
     "border border-emerald-600 bg-transparent text-emerald-600 hover:text-white p-1 h-8 hover:bg-emerald-600";
   return (
@@ -35,7 +38,14 @@ function IndividualBasketDrawerItem({
           <div className="flex items-center gap-2 text-md">
             <Button
               onClick={() => {
-                addToCart(item);
+                if (item.stock <= quantity) {
+                  toast({
+                    variant: "destructive",
+                    title: "Sorry, out of stock!",
+                  });
+                } else {
+                  addToCart(item);
+                }
               }}
               className={buttonStyle}
             >
@@ -51,7 +61,7 @@ function IndividualBasketDrawerItem({
           </div>
           <div className="font-bold">
             {" "}
-            Total: Rs {Number((item.price * quantity).toFixed(2))}
+            Total: Rs {(item.price * quantity).toFixed(2)}
           </div>
         </div>
       </div>

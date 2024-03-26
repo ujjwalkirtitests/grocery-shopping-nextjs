@@ -39,7 +39,7 @@ function StoreToDestinationDetails({
               <p>{currentUser.address}</p>
             </div>
           ) : (
-            <div className="flex flex-col items-center w-full gap-3 rounded-lg p-2 border border-emerald-500 bg-white">
+            <div className="flex flex-col items-center w-full gap-3 rounded-lg p-2 border border-emerald-500">
               <p className="text-lg text-center  sm:text-xl font-semibold">
                 Sorry, you don&apos;t have any saved address.
               </p>

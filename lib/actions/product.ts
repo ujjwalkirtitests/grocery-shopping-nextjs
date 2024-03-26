@@ -23,7 +23,7 @@ async function addProduct(product: IProduct): Promise<IProduct | null> {
 async function getTopProducts(): Promise<IProduct[] | null> {
     try {
         await connectToDatabase()
-        const products = await Product.find().sort({ rating: 'desc' }).limit(15);
+        const products = await Product.find().sort({ rating: 'desc' }).limit(15).populate('category');
         return JSON.parse(JSON.stringify(products));
     } catch (error) {
         console.error(error);

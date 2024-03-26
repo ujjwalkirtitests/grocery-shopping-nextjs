@@ -3,7 +3,6 @@ import { useCounterStore } from "./Item-store-provider";
 import IndividualBasketDrawerItem from "./IndividualBasketDrawerItem";
 import { WalletIcon } from "lucide-react";
 import { IProduct, UserData } from "@/types";
-import Script from "next/script";
 import Link from "next/link";
 import CustomisedButton from "./CustomisedButton";
 import Image from "next/image";
@@ -20,15 +19,12 @@ function groupItems(items: IProduct[]) {
   });
   return response;
 }
-interface BasketDrawerProps {
-  currentUser: UserData | null;
-}
-function BasketDrawer({ currentUser }: BasketDrawerProps) {
+
+function BasketDrawer() {
   const { items } = useCounterStore((store) => store);
 
   return (
     <DrawerContent className="">
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <div className="h-[70vh] overflow-y-scroll hide-scrollbar relative pb-20">
         {items.length !== 0 ? (
           <div>
@@ -45,7 +41,7 @@ function BasketDrawer({ currentUser }: BasketDrawerProps) {
         ) : (
           <div className="flex flex-col items-center justify-center pt-5">
             <Image
-              src={`/images/empty-cart.jpg`}
+              src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2Fempty-cart.jpg?alt=media&token=2fb4b28b-df52-4e9f-88f3-63cf4cbdbad6`}
               alt="Picture of empty shopping cart"
               height={300}
               width={300}

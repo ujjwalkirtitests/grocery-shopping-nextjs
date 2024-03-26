@@ -1,7 +1,7 @@
 import { IOrder, IPayment, IProduct, OrderStatus, UserData } from "@/types";
 
 
-async function clientSidePaymentHandler(currentUser: UserData, items: IProduct[], toast: any, router: any) {
+async function clientSidePaymentHandler(currentUser: UserData, items: IProduct[], toast: any, router: any, clearCart: () => void) {
     const amount =
         items.reduce(function (total, currentItem: IProduct) {
             total += currentItem.price;
@@ -24,7 +24,7 @@ async function clientSidePaymentHandler(currentUser: UserData, items: IProduct[]
         });
         return;
     }
-    paymentHandler(amount, createdOrder.id, items, currentUser, toast, router);
+    paymentHandler(amount, createdOrder.id, items, currentUser, toast, router, clearCart);
 }
 
 
@@ -33,7 +33,7 @@ async function clientSidePaymentHandler(currentUser: UserData, items: IProduct[]
 
 
 
-async function paymentHandler(amount: number, id: string, products: IProduct[], userDetails: UserData, toast: any, router: any) {
+async function paymentHandler(amount: number, id: string, products: IProduct[], userDetails: UserData, toast: any, router: any, clearCart: () => void) {
     var options = {
         "key_id": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string, // Enter the Key ID generated from the Dashboard
         "amount": amount.toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -79,12 +79,12 @@ async function paymentHandler(amount: number, id: string, products: IProduct[], 
                 })
             } else {
                 toast({
-                    variant: "success",
                     title: "Payment successful",
                     description: "Your order is being processed."
 
                 })
                 const data = await apiResponse.json()
+                clearCart();
                 router.push(`/orders/${data.order._id}`)
             }
         },
@@ -105,7 +105,11 @@ async function paymentHandler(amount: number, id: string, products: IProduct[], 
     var rzp1 = new window.Razorpay(options);
     rzp1.open();
     rzp1.on('payment.failed', function (response: any) {
-        alert(response.error.description);
+        toast({
+            variant: "destructive",
+            title: "Sorry, the payment failed!",
+            description: response.error.description
+        })
     })
 }
 

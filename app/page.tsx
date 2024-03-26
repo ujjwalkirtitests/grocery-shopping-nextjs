@@ -35,7 +35,9 @@ export default async function Home() {
         <CustomiseGroceryList />
         <div className="w-1/3 hidden lg:flex">
           <Image
-            src={"/images/shopping_cart.jpg"}
+            src={
+              "https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2Fshopping_cart.jpg?alt=media&token=6100cf8c-7264-4a93-8cb9-1e3fdac6d6b2"
+            }
             alt="Shopping cart jpeg"
             width={200}
             height={200}

@@ -9,7 +9,7 @@ function CustomiseGroceryList() {
           Customise your
           <br /> grocery list as you like
         </p>
-        <div className="bg-black flex flex-col items-center gap-4 px-2 py-3 rounded-[20px] cursor-pointer hover:shadow-lg">
+        <div className="bg-black flex flex-col items-center gap-4 px-2 py-3 rounded-[20px] cursor-pointer hover:shadow-lg h-full">
           <PlusIcon />
           <p className="text-center">Add List</p>
         </div>

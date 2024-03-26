@@ -43,7 +43,7 @@ async function OrderDetails({ params }: { params: { orderId: string } }) {
         Order No: {order?._id}
       </p>
       <Image
-        src={`/images/order_placed.svg`}
+        src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2Forder_placed.svg?alt=media&token=d6f2f648-fef5-43f7-a287-6ee4188a7393`}
         alt="Order placed successfully svg"
         height={200}
         width={200}

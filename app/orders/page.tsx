@@ -63,10 +63,14 @@ async function OrdersPage() {
       <div>
         {allOrders?.length === 0 && (
           <div className="flex flex-col items-center my-10">
-            <p>Sorry you have not placed any <span className="text-emerald-800 font-semibold">order</span> yet!</p>
+            <p>
+              Sorry you have not placed any{" "}
+              <span className="text-emerald-800 font-semibold">order</span> yet!
+            </p>
             <Image
-              src={`/images/404.svg`}
+              src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2F404.svg?alt=media&token=aebc2482-1b24-4c65-9bc5-1048c78e07cd`}
               alt="Nothing found in past orders svg"
+
               height={200}
               width={200}
             />

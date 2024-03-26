@@ -19,7 +19,7 @@ function ItemsList({ groceryProducts }: ItemsListProps) {
       ) : (
         <div className="flex flex-col items-center">
           <Image
-            src={`/images/404.svg`}
+            src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2F404.svg?alt=media&token=aebc2482-1b24-4c65-9bc5-1048c78e07cd`}
             alt="404 Not found svg"
             width={200}
             height={200}

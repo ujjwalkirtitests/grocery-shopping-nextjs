@@ -63,12 +63,12 @@ function Navbar() {
             onClick={() => setShowSearchBox(!showSearchBox)}
           />
           {session?.user && <BellIcon className={iconStyle} />}
-          <div className="relative mr-4">
+          <Link href={`/payments`} className="relative mr-4">
             <ShoppingBasketIcon className={iconStyle} />
             <p className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full h-7 w-7 p-1 flex items-center justify-center text-sm font-semibold">
               {items.length}
             </p>
-          </div>
+          </Link>
           {session?.user ? (
             <div className="hidden lg:flex lg:items-center gap-4">
               <Link

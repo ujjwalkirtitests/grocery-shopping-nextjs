@@ -39,9 +39,11 @@ function PaymentBill() {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-3 my-4">
-          <p className="italic text-emerald-800">Sorry, but the cart is empty!</p>
+          <p className="italic text-emerald-800">
+            Sorry, but the cart is empty!
+          </p>
           <Image
-            src={`/images/empty-cart.jpg`}
+            src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2Fempty-cart.jpg?alt=media&token=2fb4b28b-df52-4e9f-88f3-63cf4cbdbad6`}
             alt="Cart is empty"
             height={200}
             width={200}

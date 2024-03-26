@@ -12,7 +12,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         return NextResponse.json('User not found', { status: 404 });
 
     } else {
-        return redirect(process.env.DOMAIN + "/payments");
+        return NextResponse.redirect(process.env.DOMAIN + "/payments");
     }
 
 }

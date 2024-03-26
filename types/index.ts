@@ -2,6 +2,7 @@ export interface IProduct {
     title: string,
     price: number,
     discountedPrice?: number,
+    unit: string,
     thumbnail: string,
     _id?: string,
     stock: number,
