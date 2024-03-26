@@ -55,7 +55,9 @@ async function OrdersPage() {
                 </Link>
               </TableCell>
               <TableCell>{order.status.toLocaleUpperCase()}</TableCell>
-              <TableCell>dsdas</TableCell>
+              <TableCell>
+                {new Date(order.createdAt!).toLocaleString()}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -70,7 +72,6 @@ async function OrdersPage() {
             <Image
               src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2F404.svg?alt=media&token=aebc2482-1b24-4c65-9bc5-1048c78e07cd`}
               alt="Nothing found in past orders svg"
-
               height={200}
               width={200}
             />
