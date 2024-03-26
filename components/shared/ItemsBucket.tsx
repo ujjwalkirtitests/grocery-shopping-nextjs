@@ -21,7 +21,7 @@ function ItemsBucket({ currentUser }: ItemsBucketProps) {
             {items.length}
           </p>
         </DrawerTrigger>
-        <BasketDrawer currentUser={currentUser}/>
+        <BasketDrawer/>
       </Drawer>
     </div>
   );
