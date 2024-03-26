@@ -48,7 +48,7 @@ async function paymentHandler(amount: number, id: string, products: IProduct[], 
                 amount: amount,
                 currency: "INR",
                 products: products,
-                status: OrderStatus.COMPLETED,
+                status: OrderStatus.PENDING,
                 user: userDetails,
                 receipt: "ds"
             }

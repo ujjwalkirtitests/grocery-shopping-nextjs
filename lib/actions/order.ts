@@ -1,26 +1,64 @@
 import { ObjectId } from "mongodb";
 import { Order } from "../models/order";
-import { IOrder, OrderStatus } from "@/types";
+import { IOrder, IProduct } from "@/types";
 import { connectToDatabase } from "../mongodb";
+import mongoose from "mongoose";
+import { Product } from "../models/product";
 
 
 
 async function createOrder(order: IOrder): Promise<IOrder | null> {
 
     let productIds: string[] = []
+    let updatedProducts: IProduct[] = [];
     order.products.forEach(product => productIds.push(product._id as string));
     const orderObject = {
+        ...order,
         products: productIds,
-        user: order.user._id,
-        status: OrderStatus.PENDING,
-        amount: order.amount,
-        currency: order.currency,
-        receipt: order.receipt
     }
+
     const newOrder = new Order(orderObject);
     try {
+
         await connectToDatabase();
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        // aggregating products
+        let aggregatedproductsIdsInOrder: { id: string, quantity: number }[] = []
+        for (let i = 0; i < productIds.length; i++) {
+            const index = aggregatedproductsIdsInOrder.findIndex(agregatedProduct => agregatedProduct.id === productIds[i])
+            if (index !== -1) {
+                aggregatedproductsIdsInOrder[index].quantity += 1;
+            } else {
+                aggregatedproductsIdsInOrder.push({ id: productIds[i], quantity: 1 })
+            }
+        }
+
+
+        for (const product of aggregatedproductsIdsInOrder) {
+            const _product = await Product.findById(product.id);
+            if (!_product) {
+                throw new Error(`Product with ID ${product.id} not found`);
+            }
+
+            // Check if the product has sufficient stock
+            if (_product.stock < 1) {
+                throw new Error(`Insufficient stock for product with ID ${_product._id}`);
+            }
+
+            // Decrease the stock of the product by 1
+            _product.stock -= product.quantity;
+
+            // Save the updated product document
+            const updatedProduct = await _product.save();
+            updatedProducts.push(updatedProduct);
+        }
+
+        // Save the order after updating product stock
         const savedOrder = await newOrder.save();
+        await session.commitTransaction();
+        session.endSession();
         return JSON.parse(JSON.stringify(savedOrder));
     } catch (error) {
         console.error(error);
