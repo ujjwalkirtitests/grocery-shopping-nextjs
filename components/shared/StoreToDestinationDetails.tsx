@@ -7,6 +7,7 @@ import { Textarea } from "../ui/textarea";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 interface StoreToDestinationDetailsProps {
   currentUser: UserData | null;
 }
@@ -18,6 +19,9 @@ function StoreToDestinationDetails({
   currentUser,
 }: StoreToDestinationDetailsProps) {
   const [address, setAddress] = useState<string>("");
+  const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const { toast } = useToast();
   return (
@@ -34,9 +38,9 @@ function StoreToDestinationDetails({
       <div className="flex items-start gap-3">
         <HomeIcon />
         {currentUser ? (
-          currentUser.address ? (
+          currentUser.address || addressUpdated ? (
             <div>
-              <p>{currentUser.address}</p>
+              <p>{currentUser.address ? currentUser.address : address}</p>
             </div>
           ) : (
             <div className="flex flex-col items-center w-full gap-3 rounded-lg p-2 border border-emerald-500">
@@ -52,7 +56,7 @@ function StoreToDestinationDetails({
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Manually enter address.."
-                className="h-[200px] outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="h-[100px] outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
               />
               <CustomisedButton
                 onClick={async () => {
@@ -69,6 +73,10 @@ function StoreToDestinationDetails({
                       title: "Something went wrong",
                     });
                     return;
+                  } else {
+                    const updatedUser = await response.json();
+                    setAddress(updatedUser.address);
+                    setAddressUpdated(true);
                   }
                 }}
               >
