@@ -54,21 +54,16 @@ async function seedCategory() {
 }
 
 
-async function seedProduct() {
+async function seedProduct(categories: ICategory[]) {
     try {
 
         await connectToDatabase()
-
-        products.map(async (product: IProduct) => {
-            const newProduct = new Product(product);
-            await newProduct.save();
-
-        }
-        )
-
+        let modifiedProductArray: any[] = []
+        products.map((product: IProduct) => modifiedProductArray.push(({ ...product, category: categories[categories?.findIndex(category => category.name === product.category.name)]._id })))
+        console.log(modifiedProductArray)
+        await Product.insertMany(modifiedProductArray);
     } catch (err) {
         console.log(err)
-
     }
 }
 

@@ -9,7 +9,7 @@ function SideNavbar() {
   return (
     <SheetContent side={"left"} className="flex flex-col items-start">
       {session?.user ? (
-        <div className="flex flex-col items-start sm:flex-row sm:items-center gap-4 border-b pb-3 mt-10">
+        <div className="flex flex-col items-start  gap-4 border-b pb-3 mt-10">
           <Image
             className="rounded-full border-4 border-emerald-600"
             src={session.user.image || ""}

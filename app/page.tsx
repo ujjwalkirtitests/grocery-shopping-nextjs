@@ -23,7 +23,7 @@ export default async function Home() {
   let products = await getTopProducts();
 
   if (products?.length === 0) {
-    await seedProduct();
+    await seedProduct(categories || []);
     products = await getTopProducts();
   }
 
