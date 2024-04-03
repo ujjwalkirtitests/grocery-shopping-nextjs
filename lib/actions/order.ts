@@ -105,7 +105,7 @@ async function getOrderDetails(orderId: string): Promise<IOrder | null> {
 }
 
 
-async function getOrdersByStatus(status: string, currentPage: number): Promise<{ orders: IOrder[], totalPages: number } | null> {
+async function getOrdersByStatus(status: string, currentPage: number): Promise<{ orders: IOrder[], totalPages: number }> {
     try {
         await connectToDatabase()
         const pageSize = 20;
@@ -115,11 +115,11 @@ async function getOrdersByStatus(status: string, currentPage: number): Promise<{
         if (orders) {
             return JSON.parse(JSON.stringify({ orders, totalPages }))
         } else {
-            return JSON.parse(JSON.stringify(({ orders: null, totalPages })));
+            return JSON.parse(JSON.stringify(({ orders: [], totalPages })));
         }
     } catch (error) {
         console.error(error)
-        return  JSON.parse(JSON.stringify(({ orders: null, totalPages:0 }));
+        return JSON.parse(JSON.stringify(({ orders: [], totalPages: 0 })));
     }
 
 }
