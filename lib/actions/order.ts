@@ -105,4 +105,23 @@ async function getOrderDetails(orderId: string): Promise<IOrder | null> {
 }
 
 
-export { createOrder, getOrdersForUser, getOrderDetails }
+async function getOrdersByStatus(status: string, currentPage: number): Promise<{ orders: IOrder[], totalPages: number } | null> {
+    try {
+        await connectToDatabase()
+        const pageSize = 20;
+        const orderCount = await Order.countDocuments()
+        const totalPages = Math.ceil(orderCount / pageSize);
+        const orders = await Order.find({ status: status }).skip(pageSize * currentPage).limit(20).populate('user')
+        if (orders) {
+            return { orders: JSON.parse(JSON.stringify(orders)), totalPages }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
+
+}
+
+export { createOrder, getOrdersForUser, getOrderDetails, getOrdersByStatus }

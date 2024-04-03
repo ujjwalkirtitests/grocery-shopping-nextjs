@@ -1,3 +1,4 @@
+import CustomisedButton from "@/components/shared/CustomisedButton";
 import {
   Table,
   TableBody,
@@ -7,8 +8,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getOrderDetails } from "@/lib/actions/order";
-import { IProduct } from "@/types";
+import { addUser, getCurrentUser } from "@/lib/actions/user";
+import { IProduct, UserData, UserRole } from "@/types";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
 
 interface IOrderSummary {
@@ -34,8 +39,39 @@ function summariseOrder(items: IProduct[]): IOrderSummary[] {
 }
 
 async function OrderDetails({ params }: { params: { orderId: string } }) {
+  const session = await getServerSession();
+  if (!session || !session?.user) {
+    redirect(process.env.DOMAIN + "/api/auth/signin");
+  }
+
+  let currentUser = await getCurrentUser(session.user.email as string);
+  if (!currentUser) {
+    const userData: UserData = {
+      email: session.user.email as string,
+      username: session.user.name as string,
+      role: UserRole.CUSTOMER,
+      profile_pic: session.user.image as string,
+    };
+    currentUser = await addUser(userData);
+  }
   const order = await getOrderDetails(params.orderId);
-  if (!order) return <p className="px-3 text-center">No order found</p>;
+  if (!order)
+    return (
+      <div className="flex flex-col items-center gap-4">
+        <Image
+          src={`https://firebasestorage.googleapis.com/v0/b/ecommerce-homespa.appspot.com/o/images%2F404.svg?alt=media&token=aebc2482-1b24-4c65-9bc5-1048c78e07cd`}
+          alt="404 Not found svg"
+          width={200}
+          height={200}
+        />
+        <p className="px-3 text-center font-semibold text-2xl">
+          No order found
+        </p>
+        <CustomisedButton asChild>
+          <Link href={process.env.DOMAIN + "/orders"}>Go back!</Link>
+        </CustomisedButton>
+      </div>
+    );
   const orderSummary = summariseOrder(order?.products);
   return (
     <div className="px-3 mt-5 flex flex-col items-start gap-4">
@@ -63,12 +99,12 @@ async function OrderDetails({ params }: { params: { orderId: string } }) {
             <TableRow key={product.item._id}>
               <TableCell>{product.item.title}</TableCell>
               <TableCell>{product.quantity}</TableCell>
-              <TableCell>INR {product.price}</TableCell>
+              <TableCell>INR {product.price.toFixed(2)}</TableCell>
             </TableRow>
           ))}
           <TableRow className="font-semibold">
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell>INR {order?.amount / 100}</TableCell>
+            <TableCell>INR {(order?.amount / 100).toFixed(2)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

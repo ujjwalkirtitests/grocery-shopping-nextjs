@@ -6,6 +6,7 @@ import Footer from "@/components/shared/Footer";
 import NextAuthProvider from "@/components/shared/NextAuthProvider";
 import { CounterStoreProvider } from "@/components/shared/Item-store-provider";
 import { Toaster } from "@/components/ui/toaster";
+import NextTopLoader from "nextjs-toploader";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700"],
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className + " bg-gray-100"}>
+        <NextTopLoader showSpinner={false} />
         <NextAuthProvider>
           <CounterStoreProvider>
             <Navbar />

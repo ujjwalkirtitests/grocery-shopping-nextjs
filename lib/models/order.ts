@@ -7,7 +7,7 @@ import { OrderStatus } from "@/types";
 const OrderSchema = new mongoose.Schema({
     products: { type: [Schema.Types.ObjectId], ref: "Product", required: true },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    status: { type: String, required: true, enum: Object.values(OrderStatus) },
+    status: { type: String, required: true, enum: Object.values(OrderStatus), index: true },
     amount: { type: Number, required: true },
     currency: { type: String, required: true },
     receipt: { type: String, required: true },
