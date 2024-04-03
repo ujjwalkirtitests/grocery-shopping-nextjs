@@ -113,15 +113,36 @@ async function getOrdersByStatus(status: string, currentPage: number): Promise<{
         const totalPages = Math.ceil(orderCount / pageSize);
         const orders = await Order.find({ status: status }).skip(pageSize * currentPage).limit(20).populate('user')
         if (orders) {
-            return { orders: JSON.parse(JSON.stringify(orders)), totalPages }
+            return JSON.parse(JSON.stringify({ orders, totalPages }))
         } else {
-            return null;
+            return JSON.parse(JSON.stringify(({ orders: null, totalPages })));
         }
     } catch (error) {
         console.error(error)
-        return null;
+        return  JSON.parse(JSON.stringify(({ orders: null, totalPages:0 }));
     }
 
 }
 
-export { createOrder, getOrdersForUser, getOrderDetails, getOrdersByStatus }
+
+
+async function updateOrder(orderId: string, updates: Partial<IOrder>): Promise<IOrder | null> {
+    if (!orderId) throw Error('Order ID is required!')
+
+    try {
+        await connectToDatabase();
+        const order = await Order.findByIdAndUpdate(orderId, updates, { new: true }).exec();
+        if (order) {
+            console.log('Order updated:', order);
+            return order;
+        } else {
+            console.log('No user found with id:', orderId);
+            return null
+        }
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}
+
+export { createOrder, getOrdersForUser, getOrderDetails, getOrdersByStatus, updateOrder }

@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import OrderTabContent from "@/components/shared/OrderTabContent";
 import { IOrder, OrderStatus } from "@/types";
+import OrderTabs from "@/components/shared/OrderTabContent";
 
 function AdminDashboardTab({
   pendingOrders,
@@ -20,7 +20,7 @@ function AdminDashboardTab({
           Cancelled
         </TabsTrigger>
       </TabsList>
-      <OrderTabContent orders={pendingOrders || []} />
+      <OrderTabs orders={pendingOrders || []} />
     </Tabs>
   );
 }
